@@ -28,7 +28,6 @@ transform_ga_data(dataset_name = "Apriori_Dataset_GA.csv",output_name = "output.
 library(arules)
 library(arulesViz)
 
-#dataset <- read.csv('output.csv', header = FALSE)
 dataset <- read.transactions('output.csv', sep = ',', quote = "", rm.duplicates = TRUE)
 
 summary(dataset)
