@@ -1,7 +1,5 @@
 # Apriori
 
-setwd("C://Users//kbhandari//Desktop//Knowledge Share//Apriori")
-
 # Data Preprocessing
 transform_ga_data <- function(dataset_name,output_name){
   
@@ -22,11 +20,9 @@ transform_ga_data <- function(dataset_name,output_name){
 }
 
 transform_ga_data(dataset_name = "Apriori_Dataset_GA.csv",output_name = "output.csv")
-
-#install.packages('arules')
-#install.packages('arulesViz')
-library(arules)
-library(arulesViz)
+                   
+if (!require('arules')) install.packages('arules'); library('arules')
+if (!require('arulesViz')) install.packages('arulesViz'); library('arulesViz')                   
 
 dataset <- read.transactions('output.csv', sep = ',', quote = "", rm.duplicates = TRUE)
 
@@ -36,6 +32,7 @@ itemFrequencyPlot(dataset, topN = 10)
 # Training Apriori on the dataset
 rules = apriori(data = dataset)
 rules = apriori(data = dataset, parameter = list(minlen = 2, support = 0.002, confidence = 0.1))
+rules = apriori(data = dataset, parameter = list(minlen = 2, support = 0.0025, confidence = 0.1))                   
 rules = apriori(data = dataset, parameter = list(minlen = 3, support = 0.001, confidence = 0.1))
 
 # Viewing the results
@@ -61,5 +58,5 @@ plot(rules, method = "graph", engine='interactive')
 out = capture.output(inspect(rules[1:5]))
 
 everything = labels(rules)
-#print(everything)
+print(everything)
 
