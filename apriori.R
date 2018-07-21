@@ -35,14 +35,20 @@ rules = apriori(data = dataset, parameter = list(minlen = 2, support = 0.002, co
 rules = apriori(data = dataset, parameter = list(minlen = 2, support = 0.0025, confidence = 0.1))                   
 rules = apriori(data = dataset, parameter = list(minlen = 3, support = 0.001, confidence = 0.1))
 
-# Viewing the results
-inspect(sort(rules, by = 'lift')[1:10])
-
 #Removing redundant rules
 redundant_rules = is.redundant(rules)
 summary(redundant_rules)
-rules = rules[!redundant_rules]
 rules
+rules <- rules[!redundant_rules]
+
+#Removing inverse rules
+gi <- generatingItemsets(rules)
+duplicate <- which(duplicated(gi))
+rules[-duplicate]
+rules <- rules[-duplicate]
+                   
+# Viewing the results
+inspect(sort(rules, by = 'lift')[1:10])
 
 #Looking at a specific product
 rules_product = apriori(data = dataset, 
